@@ -1,3 +1,15 @@
+To make this work, change main.tf (from line 4), had a faulty principal_id format into
+
+
+```
+resource "azurerm_role_assignment" "role_consul_autojoin" {
+  scope                = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
+  role_definition_name = "Contributor"
+  principal_id         = split("/","${azuread_service_principal.sp_consul.id}")[1]
+}
+```
+
+
 ```
 cube3@omen:/mnt/c/source/nomad-poc$ wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
