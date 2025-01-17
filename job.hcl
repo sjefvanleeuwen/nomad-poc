@@ -5,7 +5,7 @@ job "example" {
     count = 1
 
     task "consumer" {
-      driver = "exec"
+      driver = "raw_exec"
 
       config {
         command = "/snap/dotnet-sdk/current/dotnet"
